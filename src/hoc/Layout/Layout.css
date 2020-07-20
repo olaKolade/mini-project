@@ -1,0 +1,27 @@
+.Layout {
+  text-align: center;
+}
+
+.Layout header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+
+.Layout main{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 5px;
+}
+
+.Layout section{
+	width: 85%;
+	padding: 10px;
+}
