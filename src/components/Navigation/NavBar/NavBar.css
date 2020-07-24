@@ -1,0 +1,29 @@
+.NavBar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2px 20px;
+	box-sizing: border-box;
+}
+
+.NavBar ul{
+	list-style: none;
+}
+
+.NavBar li{
+	display: inline;
+	margin: auto 10px;
+}
+
+.NavBar a {
+	text-decoration: none;
+}
+
+.NavBar a:hover, a:active, a.active{
+	padding: 10px;
+	border: 2px;
+	border-radius: 130px, 130px, 0px, 0px;
+	background: white;
+	color: black;
+}
+

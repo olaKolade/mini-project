@@ -3,8 +3,11 @@ import classes from './NavBar.css';
 
 const navBar = () => (
 	<nav className={classes.NavBar}>
-		<div>Menu</div>
-		<div>Nav Items</div>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/login">Login</a></li>
+			<li><a href="/register">Register</a></li>
+		</ul>
 	</nav>
 );
 
