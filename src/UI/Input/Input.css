@@ -1,0 +1,8 @@
+.Input input {
+	margin: 10px 0px;
+	border: 1px solid #bbb;
+	box-sizing: border-box;
+	border-radius: 5px;
+	padding: 5px;
+	width: 90%;
+}

@@ -1,0 +1,11 @@
+.Button {
+	padding: 10px 15px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.Primary {
+	background-color: #3f4550;
+	color: white;
+}

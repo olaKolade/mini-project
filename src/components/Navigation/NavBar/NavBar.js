@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classes from './NavBar.css';
 
-const navBar = () => (
+import { NavLink } from 'react-router-dom';
+
+const navBar = (props) => {
+	let links = null;
+
+	if (props.isAuth) {
+		links = (
+			<Fragment>
+			<li><NavLink to="/profile">View Profile</NavLink></li>
+			<li><NavLink to="/logout">Logout</NavLink></li>
+			</Fragment>
+			);
+	} else {
+		links = (
+			<Fragment>
+			<li><NavLink to="/login">Login</NavLink></li>
+			<li><NavLink to="/register">Register</NavLink></li>
+			</Fragment>
+			);
+	}
+	return (
 	<nav className={classes.NavBar}>
 		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/login">Login</a></li>
-			<li><a href="/register">Register</a></li>
+			<li><NavLink to="/">Home</NavLink></li>
+			{links}
 		</ul>
 	</nav>
 );
+	}
 
 export default navBar;
