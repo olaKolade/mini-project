@@ -6,6 +6,7 @@ import classes from './Register.css';
 
 import Input from "../../../UI/Input/Input";
 import Button from "../../../UI/Button/Button";
+import { Redirect } from "react-router-dom";
 
 
 class Register extends Component {
@@ -47,8 +48,8 @@ class Register extends Component {
 			user[key] = this.state.controls[key].value
 		}
 
+		user.id = this.props.users.length + 1;
 		this.props.onRegisterUser(user);
-
 	}
 
 	changeHandler = (e, name) => {
@@ -81,6 +82,9 @@ class Register extends Component {
 		return (
 			<div className={classes.Register}>
 				<form>
+				
+			{/* if already authenticated, redirect to homepage */}
+			{this.props.isAuth ? <Redirect to="/" /> : null}
 					{
 						formElementsArr.map(el => <Input 
 							key={el.id}
@@ -98,11 +102,17 @@ class Register extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		isAuth: state.userId !== null,
+		users: state.users
+	};
+}
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		onRegisterUser: (user) => dispatch(actions.registerUser(user))
 	}
 }
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

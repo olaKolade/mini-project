@@ -7,15 +7,31 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.REGISTER_USER:
-			const updatedUsers = state.users.concat(action.user);
-			const updatedState = {
+		case actionTypes.AUTH_REGISTER:
+			const registeredUser = state.users.concat(action.user);
+			console.log(registeredUser, 'reducer');
+			return {
 				...state,
 				userId: action.user.id,
-				users: updatedUsers
+				users: registeredUser
 			};
-			
-			return updatedState;
+
+		case actionTypes.AUTH_LOGIN:
+			return {
+				...state,
+				userId: action.userId
+			};
+
+		case actionTypes.AUTH_LOGOUT:
+			// const removedUsers = [...state.users];
+			// const index = removedUsers.findIndex(user => user.id === action.userId);
+			// removedUsers.splice(index, 1);
+
+			return {
+				...state,
+				userId: null
+			}
+
 		default:
 			return state;
 	}
