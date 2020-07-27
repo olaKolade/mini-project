@@ -19,6 +19,12 @@ class Register extends Component {
 					placeholder: "Enter Your Name",
 					type: "text",
 				},
+				validation: {
+					required: true,
+					minLength: 10
+				},
+				valid: false,
+				touched: false,
 				value: ""
 			},
 			email: {
@@ -27,6 +33,12 @@ class Register extends Component {
 					placeholder: "Enter Your Email",
 					type: "email",
 				},
+				validation: {
+					required: true,
+					mail: true
+				},
+				valid: false,
+				touched: false,
 				value: ""
 			},
 			password: {
@@ -35,6 +47,12 @@ class Register extends Component {
 					placeholder: "Enter Your Password",
 					type: "password",
 				},
+				validation: {
+					required: true,
+					minLength: 4
+				},
+				valid: false,
+				touched: false,
 				value: ""
 			}
 		}
@@ -42,14 +60,25 @@ class Register extends Component {
 
 	registerHandler = (e) => {
 		e.preventDefault();
+		let validForm = true;
 
 		const user = {}
 		for (const key in this.state.controls) {
-			user[key] = this.state.controls[key].value
+			const control = this.state.controls[key];
+			if(control.valid === false) {
+				validForm = false;
+				break;
+			}
+
+			user[key] = control.value
 		}
 
-		user.id = this.props.users.length + 1;
-		this.props.onRegisterUser(user);
+		if (validForm) {
+			user.id = this.props.users.length + 1;
+			this.props.onRegisterUser(user);
+		} else {
+			alert('Please fill all fields correctly');
+		}
 	}
 
 	changeHandler = (e, name) => {
@@ -62,9 +91,45 @@ class Register extends Component {
 		}
 
 		updatedFormControl.value = e.target.value;
+		updatedFormControl.valid = true;
 		updatedControls[name] = updatedFormControl;
 
 		this.setState({controls: updatedControls});
+	}
+
+	blurredHandler = (e, name) => {
+		const updatedControls = {
+			...this.state.controls
+		}
+
+		const updatedFormControl = {
+			...this.state.controls[name]
+		}
+
+		updatedFormControl.valid = this.validate(updatedFormControl.validation, e.target.value);
+		updatedFormControl.touched = true;
+		updatedControls[name] = updatedFormControl;
+
+		this.setState({controls: updatedControls});
+	}
+
+	validate = (rules, value) => {
+		let isValid = true;
+		value = value.trim();
+
+		if (rules.required) {
+			isValid = value !== '' && isValid;
+		}
+
+		if(rules.minLength) {
+			isValid = value.length >= rules.minLength && isValid;
+		}
+
+		if(rules.mail) {
+			isValid = value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) && isValid;
+		}
+
+		return isValid;
 	}
 
 	render() {
@@ -88,10 +153,14 @@ class Register extends Component {
 					{
 						formElementsArr.map(el => <Input 
 							key={el.id}
+							name={el.id}
 							elementType={el.type}
 							elementConfig={el.config}
 							value={el.value}
 							changed={(e) => this.changeHandler(e, el.id)}
+							blurred={(e) => this.blurredHandler(e, el.id)}
+							valid={this.state.controls[el.id].valid}
+							touched={this.state.controls[el.id].touched}
 						/>)
 					}
 				
